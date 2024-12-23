@@ -1,0 +1,19 @@
+name: Build Image and Test with Snyk
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  assign-blame:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Assign Blame
+          uses: actions/checkout@master
+
+        - uses: snyk/actions/setup@master
+        - name: Snyk Assign Blame 
+          run: snyk diff | snyk
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
